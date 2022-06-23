@@ -46,58 +46,73 @@ class _DeleteLaptopScreenState extends State<DeleteLaptopScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                TextFormField(
-                autofocus: false,
-                controller: deleteController,
-                keyboardType: TextInputType.text,
-                onSaved: (value) {
-                  deleteController.text = value!;
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return ("Insert a valid ID");
-                  }
-                },
-                textInputAction: TextInputAction.next,
+                  const Text(
+                    "Insert here the laptop's ID",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(height: 40,),
+                  TextFormField(
+                    autofocus: false,
+                    controller: deleteController,
+                    keyboardType: TextInputType.text,
+                    onSaved: (value) {
+                      deleteController.text = value!;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return ("Insert a valid ID");
+                      }
+                    },
+                    textInputAction: TextInputAction.next,
 
-                //email decoration
-                decoration: InputDecoration(
-                  filled: true,
-                  hintText: "ID number",
-                  prefixIcon: Icon(Icons.delete),
-                  fillColor: Color.fromARGB(255, 232, 232, 232),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide.none),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(
-                      color: Color.fromRGBO(24, 72, 160, 1),
-                      width: 3.0,
+                    //email decoration
+                    decoration: InputDecoration(
+                      filled: true,
+                      hintText: "ID number",
+                      prefixIcon: Icon(Icons.delete),
+                      fillColor: Color.fromARGB(255, 232, 232, 232),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                          color: Color.fromRGBO(24, 72, 160, 1),
+                          width: 3.0,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(height: 40,),
-              SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(24, 72, 160, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(24, 72, 160, 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text(
+                        "Delete",
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
-                  child: Text("Delete", style: TextStyle(fontSize: 18),),
-                ),
+                ],
               ),
-              ],
             ),
           ),
         ),
       ),
-    ),);
+    );
   }
 }

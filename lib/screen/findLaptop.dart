@@ -61,7 +61,34 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                     ),
                   ),
                   Text(
-                    "Pollici",
+                    "Type",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Inches",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Operation System",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Memory",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       //color: Colors.blue,
@@ -71,6 +98,15 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   ),
                   Text(
                     "Screen resulution",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "RAM",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       //color: Colors.blue,
@@ -97,7 +133,7 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                     ),
                   ),
                   Text(
-                    "Memory",
+                    "Price",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                      // color: Colors.blue,

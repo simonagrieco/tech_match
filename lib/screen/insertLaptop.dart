@@ -13,8 +13,14 @@ final companyController = new TextEditingController();
 final productController = new TextEditingController();
 final inchController = new TextEditingController();
 final screenController = new TextEditingController();
+final ramController = new TextEditingController();
 final cpuController = new TextEditingController();
 final gpuController = new TextEditingController();
+final memoryController = new TextEditingController();
+final osController = new TextEditingController();
+final typeController = new TextEditingController();
+final priceController = new TextEditingController();
+//final weightController = new TextEditingController();
 
 class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
   @override
@@ -36,12 +42,10 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
         } */
       },
       textInputAction: TextInputAction.next,
-
-      //email decoration
       decoration: InputDecoration(
         filled: true,
         hintText: "Company name",
-        prefixIcon: Icon(Icons.laptop),
+        prefixIcon: Icon(Icons.home_filled),
         fillColor: Color.fromARGB(255, 232, 232, 232),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -90,7 +94,7 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
     final inchField = TextFormField(
       autofocus: false,
       controller: inchController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.number,
       onSaved: (value) {
         inchController.text = value!;
       },
@@ -103,7 +107,7 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
       decoration: InputDecoration(
         filled: true,
         hintText: "Inches",
-        prefixIcon: Icon(Icons.pivot_table_chart_rounded),
+        prefixIcon: Icon(Icons.pinch_rounded),
         fillColor: Color.fromARGB(255, 232, 232, 232),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -120,7 +124,7 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
     final screenField = TextFormField(
       autofocus: false,
       controller: screenController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.number,
       onSaved: (value) {
         screenController.text = value!;
       },
@@ -133,7 +137,7 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
       decoration: InputDecoration(
         filled: true,
         hintText: "Screen resolution",
-        prefixIcon: Icon(Icons.fit_screen_rounded ),
+        prefixIcon: Icon(Icons.fit_screen_rounded),
         fillColor: Color.fromARGB(255, 232, 232, 232),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -146,7 +150,37 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
           ),
         ),
       ),
-
+    );
+    final memoryField = TextFormField(
+      autofocus: false,
+      controller: memoryController,
+      keyboardType: TextInputType.number,
+      onSaved: (value) {
+        memoryController.text = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Insert a valid memory size");
+        }
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        filled: true,
+        hintText: "Memory size",
+        prefixIcon: Icon(Icons.memory),
+        fillColor: Color.fromARGB(255, 232, 232, 232),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(24, 72, 160, 1),
+            width: 3.0,
+          ),
+        ),
+      ),
+      //email decoration
     );
     final cpuField = TextFormField(
       autofocus: false,
@@ -164,7 +198,7 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
       decoration: InputDecoration(
         filled: true,
         hintText: "CPU",
-        prefixIcon: Icon(Icons.settings),
+        prefixIcon: Icon(Icons.build_circle_rounded),
         fillColor: Color.fromARGB(255, 232, 232, 232),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -197,7 +231,135 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
       decoration: InputDecoration(
         filled: true,
         hintText: "GPU",
-        prefixIcon: Icon(Icons.settings),
+        prefixIcon: Icon(Icons.build_circle_outlined),
+        fillColor: Color.fromARGB(255, 232, 232, 232),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(24, 72, 160, 1),
+            width: 3.0,
+          ),
+        ),
+      ),
+    );
+    final osField = TextFormField(
+      autofocus: false,
+      controller: osController,
+      keyboardType: TextInputType.text,
+      onSaved: (value) {
+        osController.text = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Insert a valid OS");
+        }
+      },
+      textInputAction: TextInputAction.next,
+
+      //email decoration
+      decoration: InputDecoration(
+        filled: true,
+        hintText: "OS",
+        prefixIcon: Icon(Icons.auto_awesome_motion_outlined),
+        fillColor: Color.fromARGB(255, 232, 232, 232),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(24, 72, 160, 1),
+            width: 3.0,
+          ),
+        ),
+      ),
+    );
+    final typeField = TextFormField(
+      autofocus: false,
+      controller: typeController,
+      keyboardType: TextInputType.text,
+      onSaved: (value) {
+        typeController.text = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Insert a valid laptop type");
+        }
+      },
+      textInputAction: TextInputAction.next,
+
+      //email decoration
+      decoration: InputDecoration(
+        filled: true,
+        hintText: "Laptop type",
+        prefixIcon: Icon(Icons.laptop_mac_sharp ),
+        fillColor: Color.fromARGB(255, 232, 232, 232),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(24, 72, 160, 1),
+            width: 3.0,
+          ),
+        ),
+      ),
+    );
+    final priceField = TextFormField(
+      autofocus: false,
+      controller: priceController,
+      keyboardType: TextInputType.number,
+      onSaved: (value) {
+        priceController.text = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Insert a valid price");
+        }
+      },
+      textInputAction: TextInputAction.next,
+
+      //email decoration
+      decoration: InputDecoration(
+        filled: true,
+        hintText: "Price",
+        prefixIcon: Icon(Icons.euro_rounded),
+        fillColor: Color.fromARGB(255, 232, 232, 232),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(24, 72, 160, 1),
+            width: 3.0,
+          ),
+        ),
+      ),
+    );
+    final ramField = TextFormField(
+      autofocus: false,
+      controller: ramController,
+      keyboardType: TextInputType.number,
+      onSaved: (value) {
+        ramController.text = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Insert a valid ram");
+        }
+      },
+      textInputAction: TextInputAction.next,
+
+      //email decoration
+      decoration: InputDecoration(
+        filled: true,
+        hintText: "RAM",
+        prefixIcon: Icon(Icons.memory_sharp ),
         fillColor: Color.fromARGB(255, 232, 232, 232),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -223,7 +385,10 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
-          child: Text("Insert", style: TextStyle(fontSize: 18),),
+          child: Text(
+            "Insert",
+            style: TextStyle(fontSize: 18),
+          ),
         ),
       );
     }
@@ -252,36 +417,44 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Form(
-              //key: _formkey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 60),
-                  companyField,
-                  SizedBox(height: 20),
-                  productField,
-                  SizedBox(height: 20),
-                  inchField,
-                  SizedBox(height: 20),
-                  screenField,
-                  SizedBox(height: 20),
-                  gpuField,
-                  SizedBox(height: 20),
-                  cpuField,
-                  SizedBox(height: 60,),
-                  getButton(),
-                ],
-              ),
+          child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(36.0),
+          child: Form(
+            //key: _formkey,
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 10),
+                companyField,
+                SizedBox(height: 20),
+                productField,
+                SizedBox(height: 20),
+                typeField,
+                SizedBox(height: 20),
+                osField,
+                SizedBox(height: 20),
+                memoryField,
+                SizedBox(height: 20),
+                inchField,
+                SizedBox(height: 20),
+                screenField,
+                SizedBox(height: 20),
+                ramField,
+                SizedBox(height: 20),
+                gpuField,
+                SizedBox(height: 20),
+                cpuField,
+                SizedBox(height: 20),
+                priceField,
+                SizedBox(height: 40),
+                getButton(),
+              ],
             ),
           ),
-        )
-
-      ),
+        ),
+      )),
     );
   }
 }
