@@ -23,7 +23,7 @@ environment:
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
+# dependencies can be manually updated by changing the version numbeflurs below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   mongo_dart: ^0.7.4+1
   searchfield: ^0.6.6
+  percent_indicator: ^4.2.1 #inserito x errore su wb
 
 dev_dependencies:
   flutter_test:
