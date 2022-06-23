@@ -27,15 +27,13 @@ class _findLaptopScreenState extends State<findLaptopScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: SingleChildScrollView(
+      child: SingleChildScrollView(
           child: Container(
-            color: Colors.transparent,
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Column(
-                children: <Widget>[
-                  const Text(
+                children: const <Widget>[
+                  Text(
                     "Add filter here",
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -43,29 +41,75 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                       fontSize: 16,
                     ),
                   ),
-                  Row(
-                    children: const [
-                      Text(
-                        "Company",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Icon(
-                        Icons.home,
-                        size: 25,
-                        color: Colors.black,
-                      ),
-                    ],
-                  )
+                  Padding(padding: EdgeInsets.only(bottom: 60)),
+                  Text(
+                    "Company",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Model",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Pollici",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Screen resulution",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "CPU",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "GPU",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      //color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "Memory",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                     // color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ),
-      ),
     );
   }
 }
