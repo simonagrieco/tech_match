@@ -51,7 +51,7 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
+                  /*Text( //MODEL no perché è quello/quelli che si da in output dai filtri
                     "Model",
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -59,7 +59,7 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
+                  ),*/
                   Text(
                     "Type",
                     textAlign: TextAlign.left,

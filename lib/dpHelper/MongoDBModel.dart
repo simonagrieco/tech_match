@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 MongoDbModel mongoDbModelFromJson(String str) => MongoDbModel.fromJson(json.decode(str));
@@ -12,7 +13,8 @@ String mongoDbModelToJson(MongoDbModel data) => json.encode(data.toJson());
 
 class MongoDbModel {
   MongoDbModel({
-    required this.laptopId,
+    //this.id,
+    this.laptopId,
     required this.company,
     required this.product,
     required this.typeName,
@@ -26,7 +28,8 @@ class MongoDbModel {
     required this.price,
   });
 
-  ObjectId laptopId;
+  //ObjectId? id;
+  ObjectId? laptopId;
   String company;
   String product;
   String typeName;
@@ -40,8 +43,9 @@ class MongoDbModel {
   double price;
 
   factory MongoDbModel.fromJson(Map<String, dynamic> json) => MongoDbModel(
-    laptopId: json["laptop_ID"],
-    company: json["company"],
+    //id: json["_id"],
+    laptopId: json["laptop_ID"].toInt(),
+    company: json["Company"],
     product: json["Product"],
     typeName: json["TypeName"],
     inches: json["Inches"].toDouble(),
@@ -50,11 +54,12 @@ class MongoDbModel {
     ram: json["Ram"],
     memory: json["Memory"],
     gpu: json["Gpu"],
-    opSys: json["OpSYS"],
-    price: json["Price"].toDouble(),
+    opSys: json["OpSys"],
+    price: json["Price_euros"].toDouble(),
   );
 
   Map<String, dynamic> toJson() => {
+    //"_id": id,
     "laptop_ID": laptopId,
     "company": company,
     "Product": product,
