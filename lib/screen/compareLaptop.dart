@@ -43,7 +43,7 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
             getVsRow(),
             SizedBox(height: 20),
             getSearchField(device2Controller, "Device 2"),
-            SizedBox(height: 150),
+            SizedBox(height: 70),
             getButton(),
           ],
         ),
