@@ -107,9 +107,22 @@ class Comparator extends StatelessWidget {
                             ),
                           ),
                           margin: EdgeInsets.only(right: 10),
-                          width: (MediaQuery.of(context).size.width / 3),
+                          width: (MediaQuery.of(context).size.width / 3.8),
                           height: 80,
-                          child: Center(child: Text("Company")),
+                          child: Center(child: Text("HP")),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 232, 232, 232),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              bottomLeft: Radius.circular(0),
+                            ),
+                          ),
+                          margin: EdgeInsets.only(right: 10),
+                          width: (MediaQuery.of(context).size.width / 3.8),
+                          height: 80,
+                          child: Center(child: Text("Company", style: TextStyle(fontWeight: FontWeight.bold),)),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -119,9 +132,9 @@ class Comparator extends StatelessWidget {
                               bottomRight: Radius.circular(15),
                             ),
                           ),
-                          width: (MediaQuery.of(context).size.width / 2 - 10),
+                          width: (MediaQuery.of(context).size.width / 3.8),
                           height: 80,
-                          child: Center(child: Text("HP -- Lenovo")),
+                          child: Center(child: Text("Lenovo")),
                         )
                       ],
                     )),
