@@ -1,8 +1,10 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
+import 'package:tech_match/dpHelper/MongoDBModel.dart';
+import 'package:tech_match/dpHelper/mongodb.dart';
 import 'package:tech_match/screen/comparator.dart';
 
 class compareLaptopScreen extends StatefulWidget {
@@ -18,11 +20,26 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
 
   TextEditingController device1Controller = TextEditingController();
   TextEditingController device2Controller = TextEditingController();
+  late List<String> devices = <String>[];
+  var json;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+    dataToList();
+  }
+
+  void dataToList() async {
+    List<Map<String, dynamic>> json = await getDataFromDB();
+    for (var element in json) {
+      devices.add(element["Product"]);
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getDataFromDB() async {
+    json = await MongoDatabase.getData();
+    return json;
   }
 
   @override
@@ -52,7 +69,6 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
   }
 
   Widget getSearchField(TextEditingController controller, String name) {
-    var devices = ['HP Pavillion 15', 'Macbook Pro 2017', 'Lenovo Legion Y'];
     return SearchField(
       hint: name,
       controller: controller,
@@ -71,8 +87,16 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
           ),
         ),
       ),
+      itemHeight: 45,
+      suggestionsDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          width: 2,
+          color: Color.fromARGB(255, 232, 232, 232),
+        ),
+      ),
       suggestions: devices
-          .map((device) => SearchFieldListItem(device.toString(), item: device))
+          .map((device) => SearchFieldListItem(device, item: device))
           .toList(),
     );
   }
@@ -85,7 +109,7 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
         onPressed: () {
           String device1 = device1Controller.text;
           String device2 = device2Controller.text;
-          Navigator.push(
+          /* Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => Comparator(
@@ -93,7 +117,7 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
                 device2: device2,
               ),
             ),
-          );
+          ); */
         },
         style: ElevatedButton.styleFrom(
           primary: Color.fromRGBO(24, 72, 160, 1),
