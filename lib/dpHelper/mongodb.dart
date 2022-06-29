@@ -16,7 +16,7 @@ class MongoDatabase {
 
   static Future<String> insert(MongoDbModel data) async {
     try {
-      var result = userCollection.insertOne(data.toJson());
+      var result = userCollection.insert(data.toJson());
 
       if (result.isSuccess) {
         return "Data insert success";

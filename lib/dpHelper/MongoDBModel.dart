@@ -61,7 +61,7 @@ class MongoDbModel {
   Map<String, dynamic> toJson() => {
     //"_id": id,
     "laptop_ID": laptopId,
-    "company": company,
+    "Company": company,
     "Product": product,
     "TypeName": typeName,
     "Inches": inches,

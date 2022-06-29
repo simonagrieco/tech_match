@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_match/screen/compareLaptop.dart';
 import 'package:tech_match/screen/deleteLaptop.dart';
 import 'package:tech_match/screen/findLaptop.dart';
+import 'package:tech_match/screen/searchLaptop.dart';
 
 import 'insertLaptop.dart';
 
@@ -106,6 +107,16 @@ class _HomeScreenState extends State<HomeScreen>
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => InsertLaptopScreen()));
+                },
+                heroTag: null,
+              ),
+              Padding(padding: EdgeInsets.only(right: 10)),
+              FloatingActionButton.small(
+                backgroundColor: Color.fromRGBO(24, 72, 160, 1),
+                child: const Icon(Icons.search),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SearchLaptopScreen()));
                 },
                 heroTag: null,
               ),
