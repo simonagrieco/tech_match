@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:tech_match/dpHelper/MongoDBModel.dart';
+import 'package:tech_match/dpHelper/device.dart';
 import 'package:tech_match/dpHelper/mongodb.dart';
 import 'package:tech_match/screen/comparator.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class compareLaptopScreen extends StatefulWidget {
   const compareLaptopScreen({Key? key}) : super(key: key);
@@ -69,35 +71,27 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
   }
 
   Widget getSearchField(TextEditingController controller, String name) {
-    return SearchField(
-      hint: name,
-      controller: controller,
-      searchInputDecoration: InputDecoration(
-        filled: true,
-        fillColor: Color.fromARGB(255, 232, 232, 232),
-        prefixIcon: Icon(Icons.laptop),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Color.fromRGBO(24, 72, 160, 1),
-            width: 3.0,
-          ),
+    return TypeAheadField(
+      textFieldConfiguration: TextFieldConfiguration(
+        controller: controller,
+        autofocus: true,
+        style: DefaultTextStyle.of(context)
+            .style
+            .copyWith(fontStyle: FontStyle.italic),
+        decoration: InputDecoration(
+          labelText: name,
+          border: OutlineInputBorder(),
         ),
       ),
-      itemHeight: 45,
-      suggestionsDecoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          width: 2,
-          color: Color.fromARGB(255, 232, 232, 232),
-        ),
+      suggestionsCallback: (pattern) {
+        return Device.getDevices(pattern);
+      },
+      itemBuilder: (context, String? suggestion) => ListTile(
+        title: Text(suggestion!),
       ),
-      suggestions: devices
-          .map((device) => SearchFieldListItem(device, item: device))
-          .toList(),
+      onSuggestionSelected: (suggestion) {
+        controller.text = suggestion.toString();
+      },
     );
   }
 
@@ -109,7 +103,7 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
         onPressed: () {
           String device1 = device1Controller.text;
           String device2 = device2Controller.text;
-          /* Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => Comparator(
@@ -117,7 +111,7 @@ class _compareLaptopScreenState extends State<compareLaptopScreen>
                 device2: device2,
               ),
             ),
-          ); */
+          );
         },
         style: ElevatedButton.styleFrom(
           primary: Color.fromRGBO(24, 72, 160, 1),
