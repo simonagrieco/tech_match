@@ -7,14 +7,15 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
-MongoDbModel mongoDbModelFromJson(String str) => MongoDbModel.fromJson(json.decode(str));
+MongoDbModel mongoDbModelFromJson(String str) =>
+    MongoDbModel.fromJson(json.decode(str));
 
 String mongoDbModelToJson(MongoDbModel data) => json.encode(data.toJson());
 
 class MongoDbModel {
   MongoDbModel({
     //this.id,
-    this.laptopId,
+    required this.laptopId,
     required this.company,
     required this.product,
     required this.typeName,
@@ -43,34 +44,34 @@ class MongoDbModel {
   double price;
 
   factory MongoDbModel.fromJson(Map<String, dynamic> json) => MongoDbModel(
-    //id: json["_id"],
-    laptopId: json["laptop_ID"].toInt(),
-    company: json["Company"],
-    product: json["Product"],
-    typeName: json["TypeName"],
-    inches: json["Inches"].toDouble(),
-    screenResolution: json["ScreenResolution"],
-    cpu: json["Cpu"],
-    ram: json["Ram"],
-    memory: json["Memory"],
-    gpu: json["Gpu"],
-    opSys: json["OpSys"],
-    price: json["Price_euros"].toDouble(),
-  );
+        //id: json["_id"],
+        laptopId: json["laptop_ID"],
+        company: json["Company"],
+        product: json["Product"],
+        typeName: json["TypeName"],
+        inches: json["Inches"].toDouble(),
+        screenResolution: json["ScreenResolution"],
+        cpu: json["Cpu"],
+        ram: json["Ram"],
+        memory: json["Memory"],
+        gpu: json["Gpu"],
+        opSys: json["OpSys"],
+        price: json["Price_euros"].toDouble(),
+      );
 
   Map<String, dynamic> toJson() => {
-    //"_id": id,
-    "laptop_ID": laptopId,
-    "Company": company,
-    "Product": product,
-    "TypeName": typeName,
-    "Inches": inches,
-    "ScreenResolution": screenResolution,
-    "Cpu": cpu,
-    "Ram": ram,
-    "Memory": memory,
-    "Gpu": gpu,
-    "OpSYS": opSys,
-    "Price": price,
-  };
+        //"_id": id,
+        "laptop_ID": laptopId,
+        "Company": company,
+        "Product": product,
+        "TypeName": typeName,
+        "Inches": inches,
+        "ScreenResolution": screenResolution,
+        "Cpu": cpu,
+        "Ram": ram,
+        "Memory": memory,
+        "Gpu": gpu,
+        "OpSYS": opSys,
+        "Price": price,
+      };
 }

@@ -33,4 +33,11 @@ class MongoDatabase {
     final data = await userCollection.find().toList();
     return data;
   }
+
+  static Future<List<Map<String, dynamic>>> getDataByName(
+      String device1) async {
+    final data1 =
+        await userCollection.find(where.eq("Product", device1)).toList();
+    return data1;
+  }
 }
