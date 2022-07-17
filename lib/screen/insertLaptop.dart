@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_match/dpHelper/MongoDBModel.dart';
@@ -434,53 +436,62 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
       ),
       body: SingleChildScrollView(
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Form(
-                //key: _formkey,
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  //crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: 10),
-                    companyField,
-                    SizedBox(height: 20),
-                    productField,
-                    SizedBox(height: 20),
-                    typeField,
-                    SizedBox(height: 20),
-                    osField,
-                    SizedBox(height: 20),
-                    memoryField,
-                    SizedBox(height: 20),
-                    inchField,
-                    SizedBox(height: 20),
-                    screenField,
-                    SizedBox(height: 20),
-                    ramField,
-                    SizedBox(height: 20),
-                    gpuField,
-                    SizedBox(height: 20),
-                    cpuField,
-                    SizedBox(height: 20),
-                    priceField,
-                    SizedBox(height: 40),
-                    getButton(),
-                  ],
-                ),
-              ),
+        child: Padding(
+          padding: const EdgeInsets.all(36.0),
+          child: Form(
+            //key: _formkey,
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 10),
+                companyField,
+                SizedBox(height: 20),
+                productField,
+                SizedBox(height: 20),
+                typeField,
+                SizedBox(height: 20),
+                osField,
+                SizedBox(height: 20),
+                memoryField,
+                SizedBox(height: 20),
+                inchField,
+                SizedBox(height: 20),
+                screenField,
+                SizedBox(height: 20),
+                ramField,
+                SizedBox(height: 20),
+                gpuField,
+                SizedBox(height: 20),
+                cpuField,
+                SizedBox(height: 20),
+                priceField,
+                SizedBox(height: 40),
+                getButton(),
+              ],
             ),
-          )),
+          ),
+        ),
+      )),
     );
   }
 
-  Future<void> _insertData(String company, String product, String type,
-      String os, String memory,
-      double inches, String screenRes, String ram, String gpu, String cpu,
+  Future<void> _insertData(
+      String company,
+      String product,
+      String type,
+      String os,
+      String memory,
+      double inches,
+      String screenRes,
+      String ram,
+      String gpu,
+      String cpu,
       double price) async {
     var _id = M.ObjectId();
-    final data = MongoDbModel(laptopId: _id,
-        company:  companyController.text,
+    final data = MongoDbModel(
+        laptopId: _id,
+        company: companyController.text,
         product: productController.text,
         typeName: typeController.text,
         inches: double.parse(inchController.text),
@@ -492,25 +503,66 @@ class _InsertLaptopScreenState extends State<InsertLaptopScreen> {
         opSys: osController.text,
         price: double.parse(priceController.text));
 
-        var result= await MongoDatabase.insert(data);
-        
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Insert ID: "+ _id.$oid)));
+    if (await MongoDatabase.checkName(product)) {
+      showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Failed"),
+            content: Text("A device with this name is already in the database"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Got it"))
+            ],
+          );
+        },
+      );
+    } else {
+      var result = await MongoDatabase.insert(data);
 
-        _clearField();
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Success"),
+            content: Text("Device successfully added!"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ),
+                    );
+                  },
+                  child: Text("Return to homepage"))
+            ],
+          );
+        },
+      );
+
+      _clearField();
+    }
   }
 
-  void _clearField(){
-    companyController.text= "";
-    productController.text= "";
-    typeController.text= "";
-    osController.text= "";
-    memoryController.text= "";
-    inchController.text= "";
-    screenController.text= "";
-    ramController.text= "";
-    gpuController.text= "";
-    cpuController.text= "";
-    priceController.text= "";
+  void _clearField() {
+    companyController.text = "";
+    productController.text = "";
+    typeController.text = "";
+    osController.text = "";
+    memoryController.text = "";
+    inchController.text = "";
+    screenController.text = "";
+    ramController.text = "";
+    gpuController.text = "";
+    cpuController.text = "";
+    priceController.text = "";
   }
 
 /*void insertData(String company, String product, String type, String os,

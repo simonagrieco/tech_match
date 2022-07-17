@@ -41,17 +41,29 @@ class MongoDatabase {
     return data1;
   }
 
-  static void getFiltri(List<String> compList, List<String> typeList, List<String> osList,
-      List<String> ramList, List<String> inchList) async {
-    List<Object> listComp= compList;
-    List<Object> listType= [];
+  static Future<bool> checkName(String name) async {
+    List<Map<String, dynamic>> product = await getDataByName(name);
+    if (product.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
+  static void delete(String device) async {
+    await userCollection.remove(where.eq("Product", device));
+  }
+
+  static void getFiltri(List<String> compList, List<String> typeList,
+      List<String> osList, List<String> ramList, List<String> inchList) async {
+    List<Object> listComp = compList;
+    List<Object> listType = [];
 
     var len = compList.length;
     var len1 = typeList.length;
     var len2 = osList.length;
     var len3 = ramList.length;
-    var len4= inchList.length;
+    var len4 = inchList.length;
 
     /*final data1 = await userCollection.find().forEach((v){
       for ( int i = 0; i< len; i++){
@@ -64,12 +76,16 @@ class MongoDatabase {
 
     /*final data1 = await userCollection.find(where.map.forEach((key, value) { })).toList();*/
     // for(int i=0, j=0; i< len && j<len1; i++, j++)
-    for(int i=0, j=0, k=0, w=0; i< len && j<len1 && k<len2 && w<len3; i++, j++, k++, w++) {
-      final data1 = await userCollection.find(where.match("Company", compList[i])
-          .match("TypeName", typeList[j])
-          .match("OpSys", osList[k])
-          .match("Ram", ramList[w])
-      ).toList();
+    for (int i = 0, j = 0, k = 0, w = 0;
+        i < len && j < len1 && k < len2 && w < len3;
+        i++, j++, k++, w++) {
+      final data1 = await userCollection
+          .find(where
+              .match("Company", compList[i])
+              .match("TypeName", typeList[j])
+              .match("OpSys", osList[k])
+              .match("Ram", ramList[w]))
+          .toList();
       print(data1);
     }
   }

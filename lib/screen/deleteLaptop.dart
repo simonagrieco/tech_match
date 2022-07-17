@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names, prefer_const_constructors, unused_local_variable
+
 import 'package:flutter/material.dart';
+import 'package:tech_match/dpHelper/mongodb.dart';
+import 'package:tech_match/screen/delete.dart';
 
 import 'home.dart';
 
@@ -10,109 +13,118 @@ class DeleteLaptopScreen extends StatefulWidget {
   _DeleteLaptopScreenState createState() => _DeleteLaptopScreenState();
 }
 
-final deleteController = new TextEditingController();
+final deleteController = TextEditingController();
 
 class _DeleteLaptopScreenState extends State<DeleteLaptopScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Delete a laptop",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.grey.shade100,
-          elevation: 2,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HomeScreen()));
-            },
-          ),
-        ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    "Insert here the laptop's ID",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(height: 40,),
-                  TextFormField(
-                    autofocus: false,
-                    controller: deleteController,
-                    keyboardType: TextInputType.text,
-                    onSaved: (value) {
-                      deleteController.text = value!;
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return ("Insert a valid ID");
-                      }
-                    },
-                    textInputAction: TextInputAction.next,
-
-                    //email decoration
-                    decoration: InputDecoration(
-                      filled: true,
-                      hintText: "ID number",
-                      prefixIcon: Icon(Icons.delete),
-                      fillColor: Color.fromARGB(255, 232, 232, 232),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(24, 72, 160, 1),
-                          width: 3.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        primary: Color.fromRGBO(24, 72, 160, 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(24, 72, 160, 1),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreen(),
               ),
-            ),
-          ),
+            );
+          },
         ),
+        title: const Text("Find device"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(context: context, delegate: MySearchDelegate());
+            },
+            icon: const Icon(Icons.search),
+          ),
+        ],
       ),
+      body: Center(
+          child: Text(
+        "Search for a device to remove it",
+        style: TextStyle(
+            fontWeight: FontWeight.w700, fontSize: 18, color: Colors.black45),
+      )),
+    );
+  }
+}
+
+class MySearchDelegate extends SearchDelegate {
+  @override
+  Widget? buildLeading(BuildContext context) => IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: const Icon(Icons.arrow_back),
+      );
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+          onPressed: () {
+            if (query.isEmpty) {
+              close(context, null);
+            } else {
+              query = "";
+            }
+          },
+          icon: const Icon(Icons.clear))
+    ];
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Text("Cisrefudhy");
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return FutureBuilder(
+      future: MongoDatabase.getData(),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          if (snapshot.hasData) {
+            List suggestions = snapshot.data!.where((searchResults) {
+              final result = searchResults.toString().toLowerCase();
+              final input = query.toLowerCase();
+
+              return result.contains(input);
+            }).toList();
+            return ListView.builder(
+              itemCount: suggestions.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(suggestions[index]["Product"]),
+                  onTap: () {
+                    query = suggestions[index]["Product"];
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Delete(
+                          device: suggestions[index]["Product"],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: Text("Data not found."),
+            );
+          }
+        }
+      },
     );
   }
 }
