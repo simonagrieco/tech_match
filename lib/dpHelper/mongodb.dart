@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:tech_match/dpHelper/MongoDBModel.dart';
 
@@ -7,6 +8,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 class MongoDatabase {
   static var db, userCollection;
+
   static connect() async {
     db = await Db.create(MONGO_CONN_URL);
     await db.open();
@@ -24,7 +26,7 @@ class MongoDatabase {
         return "Data insert gone wrong!";
       }
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
       return e.toString();
     }
   }
@@ -37,7 +39,7 @@ class MongoDatabase {
   static Future<List<Map<String, dynamic>>> getDataByName(
       String device1) async {
     final data1 =
-        await userCollection.find(where.eq("Product", device1)).toList();
+    await userCollection.find(where.eq("Product", device1)).toList();
     return data1;
   }
 
@@ -54,39 +56,47 @@ class MongoDatabase {
     await userCollection.remove(where.eq("Product", device));
   }
 
-  static void getFiltri(List<String> compList, List<String> typeList,
-      List<String> osList, List<String> ramList, List<String> inchList) async {
-    List<Object> listComp = compList;
-    List<Object> listType = [];
+  static Future<List<MongoDbModel>> getFiltri(List<String> compList, List<String> typeList,
+      List<String> osList, List<String> ramList, List<String> inchList,
+      List<String> gpuList, List<String> cpuList,  List<String> memList, double price) async {
 
-    var len = compList.length;
-    var len1 = typeList.length;
-    var len2 = osList.length;
-    var len3 = ramList.length;
-    var len4 = inchList.length;
+    var lenGpuList = gpuList.length;
+    var lenCpuList = cpuList.length;
 
-    /*final data1 = await userCollection.find().forEach((v){
-      for ( int i = 0; i< len; i++){
-        if(v['Company']==(compList[i])){
-          listComp.add(v);
+    List<MongoDbModel> dbModel =[];
+
+    await userCollection.find({
+      "Company": {r'$in': compList},
+      "TypeName": {r'$in': typeList},
+      "Inches": {r'$in': inchList},
+      "OpSys": {r'$in': osList},
+      "Memory": {r'$in': memList},
+      "Ram": {r'$in': ramList},
+    }).forEach((v) {
+      //GPU Filter
+      for (int i = 0; i < lenGpuList; i++) {
+        RegExp gpu = RegExp("[^${gpuList[i]}]+");
+        if (gpu.hasMatch(v['Gpu'])) {
+          //CPU filter
+          for (int i = 0; i < lenCpuList; i++) {
+            RegExp cpu = RegExp("[^${cpuList[i]}]+");
+            if (cpu.hasMatch(v['Cpu'])) {
+              //price filter
+              if (double.parse(v['Price_euros']) <= price) {
+                //print(v);
+                MongoDbModel laptop = MongoDbModel(company: v['Company'],
+                    product: v['Product'], typeName: v['TypeName'], inches: double.parse(v['Inches']),
+                    screenResolution: v['ScreenResolution'], cpu: v['Cpu'], ram: v['Ram'],
+                    memory: v['Memory'], gpu: v['Gpu'], opSys: v['OpSys'], price: double.parse(v['Price_euros']));
+                dbModel.add(laptop);
+
+              }
+            }
+          }
         }
       }
-      //if(v['Company'].equals(compList[0]))
-    }); */
+    });
 
-    /*final data1 = await userCollection.find(where.map.forEach((key, value) { })).toList();*/
-    // for(int i=0, j=0; i< len && j<len1; i++, j++)
-    for (int i = 0, j = 0, k = 0, w = 0;
-        i < len && j < len1 && k < len2 && w < len3;
-        i++, j++, k++, w++) {
-      final data1 = await userCollection
-          .find(where
-              .match("Company", compList[i])
-              .match("TypeName", typeList[j])
-              .match("OpSys", osList[k])
-              .match("Ram", ramList[w]))
-          .toList();
-      print(data1);
-    }
+    return dbModel;
   }
 }

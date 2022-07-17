@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:multiselect/multiselect.dart';
 import 'package:tech_match/dpHelper/MongoDBModel.dart';
 
+import '../components/widget_list.dart';
 import '../dpHelper/mongodb.dart';
+import 'home.dart';
 
 
 
@@ -39,7 +42,8 @@ class _findLaptopScreenState extends State<findLaptopScreen>
   List<String> ramList = [];
   List<String> cpuList = [];
   List<String> gpuList = [];
-  List<String> priceList = [];
+  //List<String> priceList = [];
+  final priceController = new TextEditingController();
 
   //RangeValues _currentRangeValues = const RangeValues(0, 100);
 
@@ -115,7 +119,6 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                       fontWeight: FontWeight.bold,
                     ),
                   ),*/
-
                 const SizedBox(
                   height: 30,
                 ),
@@ -175,7 +178,7 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                     "10.1",
                     "11.6",
                     "12",
-                    "12.5"
+                    "12.5",
                     "13",
                     "13.3",
                     "13.9",
@@ -213,10 +216,11 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   },
                   options: const [
                     "Windows 10",
-                    "MacOS",
+                    "macOS",
                     "Mac OS X",
                     "Linux",
                     "No OS",
+                    "Chrome OS"
                   ],
                   selectedValues: opsList,
                   whenEmpty: ' Select OS',
@@ -245,14 +249,28 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                     });
                   },
                   options: const [
-                    "32GB",
-                    "64GB",
-                    "128GB",
-                    "256GB",
-                    "500GB",
-                    "512GB",
-                    "1TB",
-                    "2TB"
+                    "16GB Flash Storage",
+                    "32GB Flash Storage",
+                    "32GB SSD",
+                    "64GB Flash Storage",
+                    "128GB SSD",
+                    "128GB Flash Storage",
+                    "128GB SSD+ 1TB HDD",
+                    "180GB",
+                    "256GB SSD",
+                    "256GB SSD + 1TB HDD",
+                    "256GB SSD + 2TB HDD",
+                    "256GB SSD +  500GB HDD",
+                    "500GB HDD",
+                    "508GB Hybrid"
+                    "512GB SSD",
+                    "512 Flash Storage",
+                    "512GB SSD + 1TB HDD",
+                    "512GB SSD + 256GB SSD",
+                    "1TB HDD",
+                    "2TB HDD",
+                    "1.0TB Hybrid",
+                    "1TB SSD +  1TB HDD",
                   ],
                   selectedValues: memList,
                   whenEmpty: ' Select memory gb',
@@ -396,42 +414,39 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                /*RangeSlider(
-                  values: _currentRangeValues,
-                  min: 0,
-                  max: 100,
-                  divisions: 10,
-                  labels: RangeLabels(
-                    _currentRangeValues.start.round().toString(),
-                    _currentRangeValues.end.round().toString(),
-                  ),
-                  onChanged: (RangeValues values) {
-                    setState(() {
-                      _currentRangeValues = values;
-                    });
-                  },
-                ), */
                 const SizedBox(
                   height: 10,
                 ),
-                DropDownMultiSelect(
-                  onChanged: (List<String> listPrice) {
-                    setState(() {
-                      priceList = listPrice;
-                    });
-                  },
-                  options: const [
-                    "100 - 300€",
-                    "300 - 500€",
-                    "500 - 700€",
-                    "700 - 900€",
-                    "+ 1000€"
-                  ],
-                  selectedValues: priceList,
-                  whenEmpty: ' Select GPU type',
+               TextFormField(
+               autofocus: false,
+               controller: priceController,
+               keyboardType: TextInputType.number,
+               onSaved: (value) {
+                priceController.text = value!;
+               },
+              validator: (value){
+                if (value!.isEmpty) {
+                  return ("Insert a valid price");
+                }
+              },
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                filled: true,
+                hintText: "Enter the maximum price",
+                prefixIcon: Icon(Icons.euro_rounded),
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.black45,
+                    width: 3.0,
+                  ),
                 ),
-
-
+              ),
+            ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -440,31 +455,69 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   width: double.infinity,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {
-                      /*if(companyList.isEmpty || typeList.isEmpty || inchList.isEmpty || opsList.isEmpty
-                      || memList.isEmpty || screenList.isEmpty || ramList.isEmpty || cpuList.isEmpty ||
-                      gpuList.isEmpty || priceList.isEmpty){
-                        Toast.showToast(
-                          'Email o password errate, riprova',
-                          context,
-                          toastPosition: T.BOTTOM,
-                          textStyle: TextStyle(fontSize: 16, color: GFColors.DARK),
-                          backgroundColor: Colors.grey.shade200,
+                    onPressed: () async {
+                      if(companyList.isNotEmpty || typeList.isNotEmpty || inchList.isNotEmpty || opsList.isNotEmpty
+                      || memList.isNotEmpty || screenList.isNotEmpty || ramList.isNotEmpty || cpuList.isNotEmpty ||
+                      gpuList.isNotEmpty || priceController.text!=""){
+                        companyList;
+                        typeList;
+                        inchList;
+                        opsList;
+                        memList;
+                        screenList;
+                        ramList;
+                        cpuList;
+                        gpuList;
+                        double price = double.parse(priceController.text);
 
+                        var dbmodel= await MongoDatabase.getFiltri(companyList, typeList, opsList, ramList, inchList,gpuList,cpuList,memList,price);
+                        print(dbmodel);
+
+                        AlertDialog(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(32.0))),
+                          title: const Text(
+                            "Laptop finded",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: Container(
+                            //height: MediaQuery.of(context).size.height * 0.6,
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            child:  Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                  itemCount: dbmodel.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (_, int index) => WidgetList(
+                                    ram: dbmodel[index].ram,
+                                    inches: dbmodel[index].inches,
+                                    memory: dbmodel[index].memory,
+                                    gpu: dbmodel[index].gpu,
+                                    cpu: dbmodel[index].cpu,
+                                    price: dbmodel[index].price,
+                                    product: dbmodel[index].product,
+                                    operSyst: dbmodel[index].opSys,
+                                    typename: dbmodel[index].typeName,
+                                    company: dbmodel[index].company,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
-                      }*/
-                      companyList;
-                      typeList;
-                      inchList;
-                      opsList;
-                      memList;
-                      screenList;
-                      ramList;
-                      cpuList;
-                      gpuList;
-                      priceList;
 
-                      MongoDatabase.getFiltri(companyList, typeList, opsList, ramList, inchList);
+                      }
+                      else{
+                        //show toast
+                        print("ciao");
+                      }
+
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color.fromRGBO(24, 72, 160, 1),
@@ -489,7 +542,4 @@ class _findLaptopScreenState extends State<findLaptopScreen>
       ),
     );
   }
-
-
-
 }

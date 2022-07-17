@@ -39,6 +39,7 @@ dependencies:
   percent_indicator: ^4.2.1 #inserito x errore su wb
   multiselect: ^0.0.7
   flutter_typeahead: ^4.0.0
+  fluttertoast: ^8.0.9
   
 
 dev_dependencies:

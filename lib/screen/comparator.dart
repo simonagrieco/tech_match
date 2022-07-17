@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_string_interpolations
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tech_match/dpHelper/MongoDBModel.dart';
 import 'package:tech_match/dpHelper/mongodb.dart';
 
 class Comparator extends StatefulWidget {
@@ -62,51 +61,58 @@ class _ComparatorState extends State<Comparator> {
                   Divider(
                     thickness: 3,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(2),
-                        width: 120,
-                        child: Text(
-                          widget.device1,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(2),
+                          width: 120,
+                          child: Text(
+                            widget.device1,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment(0, 0),
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(24, 72, 160, 1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          "VS",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(2),
-                        width: 120,
-                        child: Text(
-                          widget.device2,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                        Container(
+                          margin:
+                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                          width: 50,
+                          height: 50,
+                          alignment: Alignment(0, 0),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(24, 72, 160, 1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            "VS",
+                            style: TextStyle(
+                                color: Colors.white, fontWeight: FontWeight.w700),
                           ),
                         ),
-                      ),
-                    ],
+                        Container(
+                          padding: EdgeInsets.all(2),
+                          width: 120,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              widget.device2,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.visible,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
                   ),
                   Divider(
                     thickness: 3,

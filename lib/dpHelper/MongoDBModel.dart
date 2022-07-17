@@ -15,7 +15,7 @@ String mongoDbModelToJson(MongoDbModel data) => json.encode(data.toJson());
 class MongoDbModel {
   MongoDbModel({
     //this.id,
-    required this.laptopId,
+    this.laptopId,
     required this.company,
     required this.product,
     required this.typeName,
