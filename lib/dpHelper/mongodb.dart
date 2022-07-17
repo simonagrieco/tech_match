@@ -83,7 +83,7 @@ class MongoDatabase {
             if (cpu.hasMatch(v['Cpu'])) {
               //price filter
               if (double.parse(v['Price_euros']) <= price) {
-                //print(v);
+                print(v);
                 MongoDbModel laptop = MongoDbModel(company: v['Company'],
                     product: v['Product'], typeName: v['TypeName'], inches: double.parse(v['Inches']),
                     screenResolution: v['ScreenResolution'], cpu: v['Cpu'], ram: v['Ram'],

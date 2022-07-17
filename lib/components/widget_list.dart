@@ -30,8 +30,7 @@ class WidgetList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Column(
+    return Column(
         children: [
           Container(
             width: MediaQuery.of(context).size.width / 1.1,
@@ -217,13 +216,31 @@ class WidgetList extends StatelessWidget {
                                 alignment: Alignment.centerLeft,
                                 child: Row(
                                   children: [
-                                    Text("Price: ",
+                                    Text("CPU: ",
                                         style: TextStyle(
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey[800],
                                         )),
                                     Text("$cpu",
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Colors.grey[800],
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  children: [
+                                    Text("Price: ",
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[800],
+                                        )),
+                                    Text("$price",
                                         style: TextStyle(
                                           fontSize: 15.0,
                                           color: Colors.grey[800],
@@ -244,16 +261,6 @@ class WidgetList extends StatelessWidget {
           ),
           Padding(padding: EdgeInsets.only(bottom: 10)),
         ],
-      ),
-      onTap: () {
-        /*UserSharedPreferences.setNameChat(name.toString());
-        UserSharedPreferences.setSurnameChat(surname.toString());
-        UserSharedPreferences.setUIDOfUser(UID);
-        UserSharedPreferences.setTypeOfUserChat(typeOfUserChat);
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => Chatting_screen()),
-                (route) => false); */
-      },
-    );
+      );
   }
 }

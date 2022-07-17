@@ -456,9 +456,7 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if(companyList.isNotEmpty || typeList.isNotEmpty || inchList.isNotEmpty || opsList.isNotEmpty
-                      || memList.isNotEmpty || screenList.isNotEmpty || ramList.isNotEmpty || cpuList.isNotEmpty ||
-                      gpuList.isNotEmpty || priceController.text!=""){
+
                         companyList;
                         typeList;
                         inchList;
@@ -471,52 +469,14 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                         double price = double.parse(priceController.text);
 
                         var dbmodel= await MongoDatabase.getFiltri(companyList, typeList, opsList, ramList, inchList,gpuList,cpuList,memList,price);
-                        print(dbmodel);
+                       // print(dbmodel);
 
-                        AlertDialog(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(32.0))),
-                          title: const Text(
-                            "Laptop finded",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          content: Container(
-                            //height: MediaQuery.of(context).size.height * 0.6,
-                            width: MediaQuery.of(context).size.width / 1.2,
-                            child:  Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListView.builder(
-                                  itemCount: dbmodel.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (_, int index) => WidgetList(
-                                    ram: dbmodel[index].ram,
-                                    inches: dbmodel[index].inches,
-                                    memory: dbmodel[index].memory,
-                                    gpu: dbmodel[index].gpu,
-                                    cpu: dbmodel[index].cpu,
-                                    price: dbmodel[index].price,
-                                    product: dbmodel[index].product,
-                                    operSyst: dbmodel[index].opSys,
-                                    typename: dbmodel[index].typeName,
-                                    company: dbmodel[index].company,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
 
-                      }
-                      else{
-                        //show toast
-                        print("ciao");
-                      }
+                        if(dbmodel.length>0){
+                          showMyDialog(dbmodel);
+                        } else{
+                          showMyDialogEmpy(dbmodel);
+                        }
 
                     },
                     style: ElevatedButton.styleFrom(
@@ -542,4 +502,85 @@ class _findLaptopScreenState extends State<findLaptopScreen>
       ),
     );
   }
+
+  showMyDialog(var dbmodel) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.all(Radius.circular(32.0))),
+            title: const Text('Laptop finded',textAlign: TextAlign.center),
+            content: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                //height: MediaQuery.of(context).size.height * 0.6,
+                  width: MediaQuery.of(context).size.width,
+                  child:  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: ListView.builder(
+                            itemCount: dbmodel.length,
+                            shrinkWrap: true,
+                            itemBuilder: (_, int index) => WidgetList(
+                              ram: dbmodel[index].ram,
+                              inches: dbmodel[index].inches,
+                              memory: dbmodel[index].memory,
+                              gpu: dbmodel[index].gpu,
+                              cpu: dbmodel[index].cpu,
+                              price: dbmodel[index].price,
+                              product: dbmodel[index].product,
+                              operSyst: dbmodel[index].opSys,
+                              typename: dbmodel[index].typeName,
+                              company: dbmodel[index].company,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+              ),
+            ),
+          ),
+        );
+
+
+      },
+    );
+  }
+
+  showMyDialogEmpy(var dbmodel) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.all(Radius.circular(32.0))),
+            title: const Text('Laptop finded',textAlign: TextAlign.center),
+            content: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: SizedBox(
+                //height: MediaQuery.of(context).size.height * 0.6,
+                  width: MediaQuery.of(context).size.width,
+                    child: const Text("No laptop fouded!", textAlign: TextAlign.center,)
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }
