@@ -39,7 +39,7 @@ class MongoDatabase {
   static Future<List<Map<String, dynamic>>> getDataByName(
       String device1) async {
     final data1 =
-    await userCollection.find(where.eq("Product", device1)).toList();
+        await userCollection.find(where.eq("Product", device1)).toList();
     return data1;
   }
 
@@ -56,14 +56,20 @@ class MongoDatabase {
     await userCollection.remove(where.eq("Product", device));
   }
 
-  static Future<List<MongoDbModel>> getFiltri(List<String> compList, List<String> typeList,
-      List<String> osList, List<String> ramList, List<String> inchList,
-      List<String> gpuList, List<String> cpuList,  List<String> memList, double price) async {
-
+  static Future<List<MongoDbModel>> getFiltri(
+      List<String> compList,
+      List<String> typeList,
+      List<String> osList,
+      List<String> ramList,
+      List<String> inchList,
+      List<String> gpuList,
+      List<String> cpuList,
+      List<String> memList,
+      double price) async {
     var lenGpuList = gpuList.length;
     var lenCpuList = cpuList.length;
 
-    List<MongoDbModel> dbModel =[];
+    List<MongoDbModel> dbModel = [];
 
     await userCollection.find({
       "Company": {r'$in': compList},
@@ -84,19 +90,26 @@ class MongoDatabase {
               //price filter
               if (double.parse(v['Price_euros']) <= price) {
                 print(v);
-                MongoDbModel laptop = MongoDbModel(company: v['Company'],
-                    product: v['Product'], typeName: v['TypeName'], inches: double.parse(v['Inches']),
-                    screenResolution: v['ScreenResolution'], cpu: v['Cpu'], ram: v['Ram'],
-                    memory: v['Memory'], gpu: v['Gpu'], opSys: v['OpSys'], price: double.parse(v['Price_euros']));
+                MongoDbModel laptop = MongoDbModel(
+                    company: v['Company'],
+                    product: v['Product'],
+                    typeName: v['TypeName'],
+                    inches: double.parse(v['Inches']),
+                    screenResolution: v['ScreenResolution'],
+                    cpu: v['Cpu'],
+                    ram: v['Ram'],
+                    memory: v['Memory'],
+                    gpu: v['Gpu'],
+                    opSys: v['OpSys'],
+                    price: double.parse(v['Price_euros']));
                 dbModel.add(laptop);
-
               }
             }
           }
         }
       }
     });
-
-    return dbModel;
+    var newList = dbModel.toSet().toList();
+    return newList;
   }
 }

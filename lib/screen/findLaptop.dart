@@ -8,8 +8,6 @@ import '../components/widget_list.dart';
 import '../dpHelper/mongodb.dart';
 import 'home.dart';
 
-
-
 class findLaptopScreen extends StatefulWidget {
   const findLaptopScreen({Key? key}) : super(key: key);
 
@@ -56,7 +54,6 @@ class _findLaptopScreenState extends State<findLaptopScreen>
             padding: EdgeInsets.all(30.0),
             child: Column(
               children: <Widget>[
-
                 const Text(
                   "Add filter here",
                   textAlign: TextAlign.left,
@@ -68,7 +65,6 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "Company",
                   textAlign: TextAlign.left,
@@ -122,7 +118,6 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "Type",
                   textAlign: TextAlign.left,
@@ -151,11 +146,9 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   selectedValues: typeList,
                   whenEmpty: ' Select a type',
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "Inches",
                   textAlign: TextAlign.left,
@@ -191,11 +184,9 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   selectedValues: inchList,
                   whenEmpty: ' Select inches',
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "Operation System",
                   textAlign: TextAlign.left,
@@ -225,11 +216,9 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   selectedValues: opsList,
                   whenEmpty: ' Select OS',
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "Memory",
                   textAlign: TextAlign.left,
@@ -263,7 +252,7 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                     "256GB SSD +  500GB HDD",
                     "500GB HDD",
                     "508GB Hybrid"
-                    "512GB SSD",
+                        "512GB SSD",
                     "512 Flash Storage",
                     "512GB SSD + 1TB HDD",
                     "512GB SSD + 256GB SSD",
@@ -275,7 +264,6 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   selectedValues: memList,
                   whenEmpty: ' Select memory gb',
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
@@ -339,11 +327,9 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                   selectedValues: ramList,
                   whenEmpty: ' Select RAM gb',
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "CPU",
                   textAlign: TextAlign.left,
@@ -362,18 +348,13 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                       cpuList = listCPU;
                     });
                   },
-                  options: const [
-                    "Intel",
-                    "AMD"
-                  ],
+                  options: const ["Intel", "AMD"],
                   selectedValues: cpuList,
                   whenEmpty: ' Select CPU type',
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "GPU",
                   textAlign: TextAlign.left,
@@ -392,19 +373,13 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                       gpuList = listGPU;
                     });
                   },
-                  options: const [
-                    "Intel",
-                    "AMD",
-                    "Nvidia"
-                  ],
+                  options: const ["Intel", "AMD", "Nvidia"],
                   selectedValues: gpuList,
                   whenEmpty: ' Select GPU type',
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
-
                 const Text(
                   "Price",
                   textAlign: TextAlign.left,
@@ -417,67 +392,72 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                 const SizedBox(
                   height: 10,
                 ),
-               TextFormField(
-               autofocus: false,
-               controller: priceController,
-               keyboardType: TextInputType.number,
-               onSaved: (value) {
-                priceController.text = value!;
-               },
-              validator: (value){
-                if (value!.isEmpty) {
-                  return ("Insert a valid price");
-                }
-              },
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                filled: true,
-                hintText: "Enter the maximum price",
-                prefixIcon: Icon(Icons.euro_rounded),
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                TextFormField(
+                  autofocus: false,
+                  controller: priceController,
+                  keyboardType: TextInputType.number,
+                  onSaved: (value) {
+                    priceController.text = value!;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return ("Insert a valid price");
+                    }
+                  },
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    filled: true,
+                    hintText: "Enter the maximum price",
+                    prefixIcon: Icon(Icons.euro_rounded),
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.black45,
-                    width: 3.0,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(
+                        color: Colors.black45,
+                        width: 3.0,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
                 const SizedBox(
                   height: 30,
                 ),
-
                 SizedBox(
                   width: double.infinity,
                   height: 60,
                   child: ElevatedButton(
                     onPressed: () async {
+                      companyList;
+                      typeList;
+                      inchList;
+                      opsList;
+                      memList;
+                      screenList;
+                      ramList;
+                      cpuList;
+                      gpuList;
+                      double price = double.parse(priceController.text);
 
-                        companyList;
-                        typeList;
-                        inchList;
-                        opsList;
-                        memList;
-                        screenList;
-                        ramList;
-                        cpuList;
-                        gpuList;
-                        double price = double.parse(priceController.text);
+                      var dbmodel = await MongoDatabase.getFiltri(
+                          companyList,
+                          typeList,
+                          opsList,
+                          ramList,
+                          inchList,
+                          gpuList,
+                          cpuList,
+                          memList,
+                          price);
+                      // print(dbmodel);
 
-                        var dbmodel= await MongoDatabase.getFiltri(companyList, typeList, opsList, ramList, inchList,gpuList,cpuList,memList,price);
-                       // print(dbmodel);
-
-
-                        if(dbmodel.length>0){
-                          showMyDialog(dbmodel);
-                        } else{
-                          showMyDialogEmpy(dbmodel);
-                        }
-
+                      if (dbmodel.length > 0) {
+                        showMyDialog(dbmodel);
+                      } else {
+                        showMyDialogEmpy(dbmodel);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Color.fromRGBO(24, 72, 160, 1),
@@ -491,7 +471,6 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                     ),
                   ),
                 ),
-
                 const SizedBox(
                   height: 80,
                 ),
@@ -512,15 +491,14 @@ class _findLaptopScreenState extends State<findLaptopScreen>
           scrollDirection: Axis.vertical,
           child: AlertDialog(
             shape: const RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.all(Radius.circular(32.0))),
-            title: const Text('Laptop finded',textAlign: TextAlign.center),
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            title: const Text('Laptop finded', textAlign: TextAlign.center),
             content: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Container(
-                //height: MediaQuery.of(context).size.height * 0.6,
+                  //height: MediaQuery.of(context).size.height * 0.6,
                   width: MediaQuery.of(context).size.width,
-                  child:  SingleChildScrollView(
+                  child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -546,13 +524,10 @@ class _findLaptopScreenState extends State<findLaptopScreen>
                         ),
                       ],
                     ),
-                  )
-              ),
+                  )),
             ),
           ),
         );
-
-
       },
     );
   }
@@ -566,21 +541,21 @@ class _findLaptopScreenState extends State<findLaptopScreen>
           scrollDirection: Axis.vertical,
           child: AlertDialog(
             shape: const RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.all(Radius.circular(32.0))),
-            title: const Text('Laptop finded',textAlign: TextAlign.center),
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            title: const Text('Laptop finded', textAlign: TextAlign.center),
             content: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: SizedBox(
-                //height: MediaQuery.of(context).size.height * 0.6,
+                  //height: MediaQuery.of(context).size.height * 0.6,
                   width: MediaQuery.of(context).size.width,
-                    child: const Text("No laptop fouded!", textAlign: TextAlign.center,)
-              ),
+                  child: const Text(
+                    "No laptop fouded!",
+                    textAlign: TextAlign.center,
+                  )),
             ),
           ),
         );
       },
     );
   }
-
 }
